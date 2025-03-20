@@ -6,17 +6,17 @@ This document provides Python sample code for implementing custom large language
 
 ## 🚀 Quick Start
 
-### 1.1 Environment Preparation
+### Environment Preparation
 
 - Python 3.10+
 
-### 1.2 Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 1.3 Run Sample Code
+### Run Sample Code
 
 ```bash
 python3 custom_llm.py
@@ -24,7 +24,7 @@ python3 custom_llm.py
 
 ## 📖 Function Description
 
-### 2.1 Basic Custom Large Language Model
+### Basic Custom Large Language Model
 
 > To successfully integrate with the Agora Conversational AI Engine, your custom large model service must provide an interface compatible with the OpenAI Chat Completions API.
 
@@ -36,7 +36,7 @@ Refer to the `create_chat_completion` function for implementation logic.
 
 Refer to the `create_rag_chat_completion` function for implementation logic.
 
-### 2.3 Implementing Multimodal Custom Large Language Model
+### Implementing Multimodal Custom Large Language Model
 
 Preparation:
  - Place a `file.pcm` file in the current directory with a sample rate of 16000, 16-bit, mono, and PCM format.
