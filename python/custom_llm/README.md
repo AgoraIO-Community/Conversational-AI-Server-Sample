@@ -30,7 +30,7 @@ python3 custom_llm.py
 
 Refer to the `create_chat_completion` function for implementation logic.
 
-### 2.2 Implementing Retrieval-Augmented Custom Large Language Model
+### Implementing Retrieval-Augmented Custom Large Language Model
 
 > If you want to improve the accuracy and relevance of the agent's responses, you can use the Retrieval-Augmented Generation (RAG) feature. This allows your custom large model to retrieve information from a specific knowledge base and provide the retrieval results as context for the large model to generate answers.
 
