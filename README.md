@@ -21,6 +21,8 @@ This repository provides sample code for the Agora Conversational AI Engine serv
 | ------------------- | ---------------------------------- |
 | [Python](./python/) | [Custom LLM](./python/custom_llm/) |
 | [Golang](./golang/) | [Custom LLM](./golang/custom_llm/) |
+| [Node.js](./node/)  | [Custom LLM](./node/custom_llm/)   |
+
 ---
 
 ## ❓ How to Contact Agora for Assistance
