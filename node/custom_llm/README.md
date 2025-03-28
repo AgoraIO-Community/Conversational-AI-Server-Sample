@@ -33,12 +33,6 @@ OPENAI_API_KEY=your-openai-api-key
 ### Run Sample Code
 
 ```bash
-node custom_llm.js
-```
-
-Or with npm:
-
-```bash
 npm start
 ```
 
@@ -47,6 +41,8 @@ For development with auto-restart:
 ```bash
 npm run dev
 ```
+
+For testing the server, we recommend using a tunneling tool like [ngrok](https://ngrok.com/) to expose your local server to the internet.
 
 ## 🔄 Architecture and Flow Diagrams
 
