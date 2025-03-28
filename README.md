@@ -1,4 +1,4 @@
-# 🌟 Convsersational-AI-Server-Sample 🌟 
+# 🌟 Convsersational-AI-Server-Sample 🌟
 
 ## 🔮 Overview
 
@@ -17,9 +17,10 @@ This repository provides sample code for the Agora Conversational AI Engine serv
 
 ## 🚀 Quick Start
 
-|   Language | Function |
-| -------- | --- |
-|  [Python](./python/) | [Custom LLM](./python/custom_llm/) |
+| Language            | Function                           |
+| ------------------- | ---------------------------------- |
+| [Python](./python/) | [Custom LLM](./python/custom_llm/) |
+| [Golang](./golang/) | [Custom LLM](./golang/custom_llm/) |
 ---
 
 ## ❓ How to Contact Agora for Assistance
