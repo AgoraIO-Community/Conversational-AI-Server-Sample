@@ -1,4 +1,4 @@
-# 🌟 Custom LLM Sample Code for Express.js
+# 🌟 Custom LLM Sample Code for Node.js
 
 > The Agora Conversational AI Engine supports custom large language model (LLM) functionality. You can refer to this project code to implement custom large language model functionality.
 
@@ -40,6 +40,21 @@ For development with auto-restart:
 
 ```bash
 npm run dev
+```
+
+when the server is running, you will see the following output:
+
+```bash
+INFO: Server running on port 8000
+```
+
+Use the following command to test the server:
+
+```bash
+curl -X POST http://localhost:8000/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_OPENAI_API_KEY" \
+  -d '{"messages": [{"role": "user", "content": "Hello, how are you?"}], "stream": true, "model": "gpt-4o-mini"}'
 ```
 
 For testing the server, we recommend using a tunneling tool like [ngrok](https://ngrok.com/) to expose your local server to the internet.
