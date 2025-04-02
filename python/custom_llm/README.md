@@ -10,6 +10,13 @@ This document provides Python sample code for implementing custom large language
 
 - Python 3.10+
 
+Python virtual environment:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
 ### Install Dependencies
 
 ```bash
@@ -21,6 +28,50 @@ pip install -r requirements.txt
 ```bash
 python3 custom_llm.py
 ```
+
+When the server is running, you will see the following output:
+
+```bash
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+```
+
+Use the following command to test the server:
+
+```bash
+curl -X POST http://localhost:8000/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_LLM_API_KEY" \
+  -d '{"messages": [{"role": "user", "content": "Hello, how are you?"}], "stream": true, "model": "gpt-4o-mini"}'
+```
+
+## 🔄 Architecture and Flow Diagrams
+
+### System Architecture
+
+```mermaid
+flowchart LR
+    Client-->|POST Request|Server
+
+    subgraph Server[Custom LLM Server]
+        Basic["chat/completions"]
+        RAG["rag/chat/completions"]
+        Audio["audio/chat/completions"]
+    end
+
+
+    Server-->|SSE Response|Client
+
+    Server-->|API call|OpenAI[OpenAI API]
+    OpenAI-->|Stream Response|Server
+
+    subgraph Knowledge
+        KB[Knowledge Base]
+    end
+
+    RAG-.->|Retrieval|KB
+```
+
+For more details about the three endpoints and their request flows, see the [Request Flow Diagrams](#📝-request-flow-diagrams) section.
 
 ## 📖 Function Description
 
@@ -39,10 +90,100 @@ Refer to the `create_rag_chat_completion` function for implementation logic.
 ### Implementing Multimodal Custom Large Language Model
 
 Preparation:
- - Place a `file.pcm` file in the current directory with a sample rate of 16000, 16-bit, mono, and PCM format.
- - Place a `file.txt` file in the current directory containing the text transcription of the above audio file.
+
+- Place a `file.pcm` file in the current directory with a sample rate of 16000, 16-bit, mono, and PCM format.
+- Place a `file.txt` file in the current directory containing the text transcription of the above audio file.
 
 Refer to the `create_audio_chat_completion` function for implementation logic.
+
+## 📝 Request Flow Diagrams
+
+### Basic LLM Request Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server as Custom LLM Server
+    participant OpenAI
+
+    Client->>Server: POST /chat/completions
+    Note over Client,Server: With messages, model, stream params
+
+    Server->>OpenAI: Create chat.completions stream
+
+    loop For each chunk
+        OpenAI->>Server: Streaming chunk
+        Server->>Client: SSE data: chunk
+    end
+
+    Server->>Client: SSE data: [DONE]
+```
+
+### RAG-enhanced LLM Request Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server as Custom LLM Server
+    participant KB as Knowledge Base
+    participant OpenAI
+
+    Client->>Server: POST /rag/chat/completions
+    Note over Client,Server: With messages, model params
+
+    Server->>Client: SSE data: "Waiting message"
+
+    Server->>KB: Perform RAG retrieval
+    KB->>Server: Return relevant context
+
+    Server->>Server: Refactor messages with context
+
+    Server->>OpenAI: Create chat.completions stream with context
+
+    loop For each chunk
+        OpenAI->>Server: Streaming chunk
+        Server->>Client: SSE data: chunk
+    end
+
+    Server->>Client: SSE data: [DONE]
+```
+
+### Multimodal Audio LLM Request Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Server as Custom LLM Server
+    participant FS as File System
+
+    Client->>Server: POST /audio/chat/completions
+    Note over Client,Server: With messages, model params
+
+    alt Files exist
+        Server->>FS: Read text file
+        FS->>Server: Return text content
+
+        Server->>FS: Read audio file
+        FS->>Server: Return audio data
+
+        Server->>Client: SSE data: transcript
+
+        loop For each audio chunk
+            Server->>Client: SSE data: audio chunk
+            Note over Server,Client: With small delay between chunks
+        end
+    else Files not found
+        Server->>Server: Generate simulated response
+        Server->>Client: SSE data: simulated transcript
+
+        loop For simulated chunks
+            Server->>Client: SSE data: random audio data
+            Note over Server,Client: With small delay between chunks
+        end
+    end
+
+    Server->>Client: SSE data: [DONE]
+```
 
 ## 📚 Resources
 
