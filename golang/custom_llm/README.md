@@ -74,22 +74,19 @@ For more details about the three endpoints and their request flows, see the [Req
 
 > To successfully integrate with the Agora Conversational AI Engine, your custom large model service must provide an interface compatible with the OpenAI Chat Completions API.
 
-Refer to the `handleChatCompletion` function for implementation logic.
+The `/chat/completions` endpoint implements the basic chat completions functionality.
 
 ### Implementing Retrieval-Augmented Custom Large Language Model
 
 > If you want to improve the accuracy and relevance of the agent's responses, you can use the Retrieval-Augmented Generation (RAG) feature. This allows your custom large model to retrieve information from a specific knowledge base and provide the retrieval results as context for the large model to generate answers.
 
-Refer to the `handleRAGChatCompletion` function for implementation logic.
+The `/rag/chat/completions` endpoint demonstrates a simple implementation of RAG using a memory-based knowledge store.
 
 ### Implementing Multimodal Custom Large Language Model
 
-Preparation:
+> Multimodal LLMs can process and generate text, images, and audio content.
 
-- Place a `file.pcm` file in the current directory with a sample rate of 16000, 16-bit, mono, and PCM format.
-- Place a `file.txt` file in the current directory containing the text transcription of the above audio file.
-
-Refer to the `handleAudioChatCompletion` function for implementation logic.
+The `/audio/chat/completions` endpoint simulates an audio response with a transcript and audio data chunks.
 
 ## 📝 Request Flow Diagrams
 
